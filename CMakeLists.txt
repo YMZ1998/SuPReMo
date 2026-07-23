@@ -20,7 +20,7 @@
 # Set the minimum CMake version.
 ######################################################################
 set(CMAKE_CXX_STANDARD 11)
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.5...3.28)
 
 ##################################################################################
 # Set some CMake Policies.

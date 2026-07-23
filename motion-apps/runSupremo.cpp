@@ -20,6 +20,8 @@
 #include <algorithm>
 #include <sstream>
 #include <iomanip>  
+#include <vector>
+#include <direct.h>
 #include "nifti1_io.h"
 #include "_reg_ReadWriteImage.h"
 #include "Supremo.h"
@@ -43,6 +45,43 @@ int main(int argc, char* argv[])
   // First things first: Which version is actually running:
   std::cout << "Running Supremo version (git commit): " << g_GIT_SHA1 << std::endl;
 
+  std::vector<std::string> defaultArgs;
+  std::vector<char*> defaultArgv;
+  if (argc == 1)
+  {
+    std::cout << "No command line arguments provided. Running with built-in demo parameters." << std::endl;
+    _chdir("D:/code/SuPReMo/motion-test/test-data");
+
+    defaultArgs.push_back(argv[0]);
+    defaultArgs.push_back("-refState");
+    defaultArgs.push_back("D:/code/SuPReMo/motion-test/test-data/xcat/mat_1.nii.gz");
+    defaultArgs.push_back("-dynamic");
+    defaultArgs.push_back("10");
+    defaultArgs.push_back("D:/code/SuPReMo/motion-test/test-data/xcat/volumes_XCAT_fileList.txt");
+    defaultArgs.push_back("-surr");
+    defaultArgs.push_back("2");
+    defaultArgs.push_back("D:/code/SuPReMo/motion-test/test-data/xcat/surrogate_XCAT_ApSi_Zsc.txt");
+    defaultArgs.push_back("-ln");
+    defaultArgs.push_back("1");
+    defaultArgs.push_back("-lp");
+    defaultArgs.push_back("1");
+    defaultArgs.push_back("-sx");
+    defaultArgs.push_back("10");
+    defaultArgs.push_back("-be");
+    defaultArgs.push_back("0.1");
+    defaultArgs.push_back("-maxFitIt");
+    defaultArgs.push_back("1");
+    defaultArgs.push_back("-outRCM");
+    defaultArgs.push_back("D:/code/SuPReMo/default_rcm.nii.gz");
+
+    for (std::string& arg : defaultArgs)
+    {
+      defaultArgv.push_back(&arg[0]);
+    }
+
+    argc = static_cast<int>(defaultArgv.size());
+    argv = defaultArgv.data();
+  }
 
   // Specify a map that lists all known parameters
   std::map<std::string, CommandLineOption> commandLineOptions;

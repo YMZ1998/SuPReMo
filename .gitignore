@@ -1,2 +1,4 @@
 build/
 output/
+/build-vs2019
+/default_rcm_t00.nii.gz
